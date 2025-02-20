@@ -3,6 +3,7 @@ Write-Host "Disabling Explorer HelpPane F1 shortcut (see Remove-F1HelpShortcut.p
 Stop-Process -Name "HelpPane" -Force -ErrorAction SilentlyContinue
 takeown /f "c:\windows\HelpPane.exe"
 icacls "c:\windows\HelpPane.exe" /deny "Everyone:(X)"
+Write-Host ""
 
 # Revert with this:
 <#

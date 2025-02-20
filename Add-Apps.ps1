@@ -30,7 +30,6 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         "Microsoft.Powershell" # pwsh 7
         "voidtools.Everything"
         "Microsoft.PowerToys"
-        "Microsoft.VisualStudioCode"
         "Git.Git"
         "Kubernetes.kubectl"
         "ahmetb.kubectx"
@@ -43,8 +42,17 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         winget install --id "$id" --exact --source winget --accept-package-agreements --accept-source-agreements
     }
 
-    # Configures git to use VS code as default editor
-    git config --global core.editor "code --wait"
+    # https://github.com/microsoft/winget-cli/discussions/1798#discussioncomment-7812764
+    # https://github.com/microsoft/vscode/blob/main/build/win32/code.iss#L81
+    winget install --id "Microsoft.VisualStudioCode" --override '/VERYSILENT /SP- /MERGETASKS="!runcode,!desktopicon,quicklaunchicon,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"' --exact --source winget --accept-package-agreements --accept-source-agreements
+
+    try {
+        # Configures git to use VS code as default editor
+        &"C:\Program Files\Git\cmd\git.exe" config --global core.editor "code --wait"
+    }
+    catch {
+        Write-Warning "Failed to set vscode as default editor for git"
+    }
 
 }
 

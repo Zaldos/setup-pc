@@ -47,7 +47,6 @@ try {
     # Accepts Terms
     winget list --accept-source-agreements --name "skipthis-asdasdasdadasd" | out-null
     . .\Remove-F1HelpShortcut.ps1
-    . .\Add-Apps.ps1
     . .\Remove-WingetApps.ps1
     . .\Remove-Telemetry.ps1
   
@@ -104,10 +103,13 @@ try {
         taskkill /f /im "MicrosoftEdgeUpdate.exe"
     }
     
+    
     Write-Host "Restarting explorer..."
     taskkill /f /im "explorer.exe"
     Start-Process "explorer.exe"
     Write-Host "Explorer restarted"
+
+    . .\Add-Apps.ps1 #should go last? Move out registry toggles
 }
 catch {
     Write-Host $_.Exception
