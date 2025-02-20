@@ -12,13 +12,13 @@
 "Microsoft.WindowsMaps"
 "Microsoft.YourPhone"
 "*SolitaireCollection*"
-"Microsoft.Windows.NarratorQuickStart"
 "Microsoft.ZuneMusic"
 "MicrosoftWindows.Client.WebExperience"
 "Microsoft.MicrosoftOfficeHub" #MS Office
 "Microsoft.Teams"
 "MSTeams"
 #>
+
 switch ($configuration) {
     "WORK" {
         $appsToRemove = @(
@@ -34,7 +34,6 @@ switch ($configuration) {
             "Microsoft.WindowsMaps"
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
-            "Microsoft.Windows.NarratorQuickStart"
             "Microsoft.ZuneMusic"
             "MicrosoftWindows.Client.WebExperience"
         )
@@ -53,7 +52,6 @@ switch ($configuration) {
             "Microsoft.WindowsMaps"
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
-            "Microsoft.Windows.NarratorQuickStart"
             "Microsoft.ZuneMusic"
             "MicrosoftWindows.Client.WebExperience"
             "Microsoft.Teams"
@@ -75,7 +73,6 @@ switch ($configuration) {
             "Microsoft.WindowsMaps"
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
-            "Microsoft.Windows.NarratorQuickStart"
             "Microsoft.ZuneMusic"
             "MicrosoftWindows.Client.WebExperience"
             "Microsoft.MicrosoftOfficeHub" #MS Office

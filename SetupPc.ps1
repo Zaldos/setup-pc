@@ -48,6 +48,7 @@ try {
     winget list --accept-source-agreements --name "skipthis-asdasdasdadasd" | out-null
     . .\Remove-F1HelpShortcut.ps1
     . .\Remove-WingetApps.ps1
+    . .\Remove-AppxJunk.ps1
     . .\Remove-Telemetry.ps1
   
     # Disables the start menu searching the web
