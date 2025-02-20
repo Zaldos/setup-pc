@@ -4,10 +4,6 @@
 # For user
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 .\Script.ps1
-
-# Machine
-Set-ExecutionPolicy Unrestricted -Scope LocalMachine -Force
-.\Script.ps1
 #>
 # Useful
 # $all = Get-AppxPackage "*OneDrive*" -allusers; $all | Select-Object -Property Name, InstallLocation | Sort-Object -Property Name
@@ -29,6 +25,9 @@ $oldRightClickMenu = $true
 $removeOneDrive = $true
 $removeMsTeams = $true
 
+. .\Debug.ps1
+. .\Winget-Module.ps1
+
 try {
     if (!([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
         Write-Host "Not launched as admin, relaunching..."
@@ -39,28 +38,6 @@ try {
 catch {
     Write-Host $_
     Read-Host
-}
-
-function Write-IfDebug($message) { if ($debug) { Write-Host $message -ForegroundColor Yellow } }
-
-function Test-WingetExists($id) {
-    if ([string]::IsNullOrWhiteSpace($id)) {
-        throw "Id cannot be null or empty!"
-    }
-    
-    Write-IfDebug "Looking for $id"
-    $wingetResult = winget list --id $id
-    $exists = -not (($wingetResult -join "") -like "*No installed package found matching input criteria*")
-
-    if ($exists) { Write-IfDebug "$id found"; return $true }
-    else { Write-IfDebug "$id not found"; return $false }
-}
-
-function Remove-WingetIfExists($id) {
-    if (Test-WingetExists($id)) {
-        Write-IfDebug "Winget uninstall $id"
-        winget uninstall --id $id
-    }
 }
 
 function New-ItemOrGet($Path) {
@@ -102,7 +79,12 @@ try {
         Write-Host "Installing everything search..."
         winget install --id voidtools.Everything --source winget
         Write-Host "Installing PowerToys..."
-        winget install --id Microsoft.PowerToys
+        winget install --id Microsoft.PowerToys --source winget
+        Write-Host "Installing VsCode"
+        winget install --id Microsoft.VisualStudioCode --source winget
+        Write-Host "Installing Git"
+        winget install --id Git.Git -e --source winget
+        git config --global core.editor "code --wait"
     }
 
     if ($removeMsTeams) {
