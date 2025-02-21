@@ -7,6 +7,13 @@ if ($installFirefox) {
     # winget install --id Mozilla.Firefox --exact --accept-package-agreements --accept-source-agreements
     Write-Host "Firefox installed"
 
+    # Disable Firefox Pocket
+    # Software\Policies\Mozilla\Firefox\DisablePocket
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox" | Set-ItemProperty -Name "DisablePocket" -Value 1
+
+    # https://mozilla.github.io/policy-templates/#firefoxhome
+    
+
     if ($installAdblock) {
         Write-Host "Adding Ublock Origin to Firefox"
         # https://mozilla.github.io/policy-templates/#extensionsettings
@@ -21,11 +28,32 @@ if ($installChrome) {
     Write-Host "Installing Chrome..."
     winget install --id Google.Chrome --exact --accept-package-agreements --accept-source-agreements
     Write-Host "Chrome installed"
+
+    # Enables Manifest v2 extensions # https://chromeenterprise.google/policies/?policy=ExtensionManifestV2Availability
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Google\Chrome\ExtensionManifestV2Availability" | Set-ItemProperty -Name "1" -Value "2"
+
+    if ($installAdblock) {
+        Write-Host "Adding Ublock Origin to Chrome"
+
+        # Forced
+        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist" | Set-ItemProperty -Name "1" -Value "cjpalhdlnbpafiamejdnhcphjbkeiagm"
+
+        # Added as recommended
+        # New-ItemOrGet -Path "HKLM:\Software\Wow6432Node\Google\Chrome\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm" | Set-ItemProperty -Name "update_url" -Value "https://clients2.google.com/service/update2/crx"
+    }
 }
+
+# Enables Manifest v2 extensions # https://learn.microsoft.com/en-us/DeployEdge/microsoft-edge-policies#extensionmanifestv2availability
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "ExtensionManifestV2Availability" -Value "2"
 
 if ($installAdblock) {
     Write-Host "Adding Ublock Origin to MS Edge"
+
+    # Forced
     New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist" | Set-ItemProperty -Name "1" -Value "odfafepnkmbhccpbejgmiehpchacaeak"
+
+    # Added as recommended
+    # New-ItemOrGet -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Edge\Extensions\odfafepnkmbhccpbejgmiehpchacaeak" | Set-ItemProperty -Name "update_url" -Value "https://edge.microsoft.com/extensionwebstorebase/v1/crx"
 }
 
 if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
