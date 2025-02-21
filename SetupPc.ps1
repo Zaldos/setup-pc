@@ -11,6 +11,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # $configuration = "PARENT"
 # $configuration = "WORK"
 $configuration = "HOME"
+Write-Host "Using $configuration configuration"
 
 $disableTelemetry = $true
 $resetNewsAndInterestsRegistry = $false #only registry toggles not app removals
