@@ -11,6 +11,8 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # $configuration = "PARENT"
 # $configuration = "WORK"
 $configuration = "HOME"
+$DebugPreference = "Continue" # Comment out to hide debug messages
+
 Write-Host "Using $configuration configuration"
 
 $disableTelemetry = $true
