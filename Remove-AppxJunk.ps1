@@ -17,6 +17,9 @@
 "Microsoft.MicrosoftOfficeHub" #MS Office
 "Microsoft.Teams"
 "MSTeams"
+"Microsoft.GamingApp" # The XBOX app
+"MicrosoftCorporationII.QuickAssist" # Quick assist app
+"Microsoft.Xbox.TCUI" # XBOX Live
 #>
 
 switch ($configuration) {
@@ -36,6 +39,8 @@ switch ($configuration) {
             "*SolitaireCollection*"
             "Microsoft.ZuneMusic"
             "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
+            "Microsoft.GamingApp" # The XBOX app
+            "Microsoft.Xbox.TCUI" # XBOX Live
         )
     }
     "PARENT" {
@@ -78,6 +83,7 @@ switch ($configuration) {
             "Microsoft.MicrosoftOfficeHub" #MS Office
             "Microsoft.Teams"
             "MSTeams"
+            "MicrosoftCorporationII.QuickAssist" # Quick assist app
         )
     }
     default {
