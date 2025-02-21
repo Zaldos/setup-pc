@@ -13,7 +13,7 @@
 "Microsoft.YourPhone"
 "*SolitaireCollection*"
 "Microsoft.ZuneMusic"
-"MicrosoftWindows.Client.WebExperience"
+"MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
 "Microsoft.MicrosoftOfficeHub" #MS Office
 "Microsoft.Teams"
 "MSTeams"
@@ -35,7 +35,7 @@ switch ($configuration) {
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
             "Microsoft.ZuneMusic"
-            "MicrosoftWindows.Client.WebExperience"
+            "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
         )
     }
     "PARENT" {
@@ -53,7 +53,7 @@ switch ($configuration) {
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
             "Microsoft.ZuneMusic"
-            "MicrosoftWindows.Client.WebExperience"
+            "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
             "Microsoft.Teams"
             "MSTeams"
         )
@@ -74,7 +74,7 @@ switch ($configuration) {
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
             "Microsoft.ZuneMusic"
-            "MicrosoftWindows.Client.WebExperience"
+            "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
             "Microsoft.MicrosoftOfficeHub" #MS Office
             "Microsoft.Teams"
             "MSTeams"

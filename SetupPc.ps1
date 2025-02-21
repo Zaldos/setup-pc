@@ -13,7 +13,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 $configuration = "HOME"
 
 $disableTelemetry = $true
-$disableNewsAndInterests = $false #only registry toggles not app removals
+$resetNewsAndInterestsRegistry = $false #only registry toggles not app removals
 
 $installAdblock = $true # Will force UblockOrigin onto your browser :)
 $installFirefox = $false
@@ -21,6 +21,8 @@ $installChrome = $false
 
 $oldRightClickMenu = $true #TODO
 $disableMsAccounts = $false #TODO
+
+$skipAddingApps = $true
 
 Set-Location "$PSScriptRoot"
 
@@ -39,6 +41,16 @@ catch {
     Read-Host
 }
 
+function Restart-Processes {
+    Write-Host "Restarting explorer..."
+    taskkill /f /im "explorer.exe"
+    Start-Process "explorer.exe"
+    Write-Host "Explorer restarted"
+
+    taskkill /f /im "msedge.exe"
+    taskkill /f /im "MicrosoftEdgeUpdate.exe"
+}
+
 ###########
 ## START ##
 ###########
@@ -47,25 +59,23 @@ try {
     # Accepts Terms
     winget list --accept-source-agreements --name "skipthis-asdasdasdadasd" | out-null
     . .\Remove-F1HelpShortcut.ps1
+    . .\Add-RegistryTweaks.ps1
     . .\Remove-WingetApps.ps1
     . .\Remove-AppxJunk.ps1
     . .\Remove-Telemetry.ps1
   
-    # Disables the start menu searching the web
-    New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" | Set-ItemProperty -Name "DisableSearchBoxSuggestions" -Value 1
+    if ($resetNewsAndInterestsRegistry) {
+        # All should start after explorer restart
+        # News and interests (w10)
+        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 1
 
-    # Remove sponsored link shortucts in Edge
-    New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageHideDefaultTopSites" -Value 1
-
-    # Hides the meet now icon on task bar (w10)
-    New-ItemOrGet -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" | Set-ItemProperty -Name "HideSCAMeetNow" -Value 1
-
-    if (-not $configuration -eq "WORK") {
-        Write-Host "Disabling delivery optimization"
-        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" | Set-ItemProperty -Name "DODownloadMode" -Value 0
+        # Taskbar news (w11)
+        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Set-ItemProperty -Name "AllowNewsAndInterests" -Value 1
+        
+        # Edge news
+        Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name "NewTabPageContentEnabled"
     }
-
-    if ($disableNewsAndInterests) {
+    else {
         # News and interests (w10)
         New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 0
 
@@ -76,19 +86,9 @@ try {
         # Edge news
         New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageContentEnabled" -Value 0
     }
-    else {
-        # All should start after explorer restart
-        # News and interests (w10)
-        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 1
-
-        # Taskbar news (w11)
-
-        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Set-ItemProperty -Name "AllowNewsAndInterests" -Value 1
-        # Edge news
-        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Remove-ItemProperty -Name "NewTabPageContentEnabled"
-    }
 
     # if ($disableMsAccounts) {
+    #     # these three dont do anything, maybe need restart
     #     New-ItemOrGet -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" | Set-ItemProperty -Name "NoConnectedUser" -Value 3
     #     New-ItemOrGet -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowYourAccount" | Set-ItemProperty -Name "value" -Value 0
     #     New-ItemOrGet -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Settings\AllowSignInOptions" | Set-ItemProperty -Name "value" -Value 0
@@ -96,21 +96,12 @@ try {
     # else {
     #     Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "NoConnectedUser"
     # }
+    
+    Restart-Processes
 
-    # Stops edge running in background
-    if ($configuration -eq "HOME") {
-        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "StartupBoostEnabled" -Value 0
-        taskkill /f /im "msedge.exe"
-        taskkill /f /im "MicrosoftEdgeUpdate.exe"
+    if (-not $skipAddingApps) {
+        . .\Add-Apps.ps1 #should go last? Move out registry toggles}
     }
-    
-    
-    Write-Host "Restarting explorer..."
-    taskkill /f /im "explorer.exe"
-    Start-Process "explorer.exe"
-    Write-Host "Explorer restarted"
-
-    . .\Add-Apps.ps1 #should go last? Move out registry toggles
 }
 catch {
     Write-Host $_.Exception

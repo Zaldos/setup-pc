@@ -20,9 +20,6 @@ function Remove-ItemPropertyIfExist($Path, $Name) {
         $pathItem = Get-Item -Path $Path
         if ($pathItem.Property -contains "$Name") {
             Remove-ItemProperty -Path $Path -Name $Name
-            return $true
         }
     }
-
-    return $false
 }

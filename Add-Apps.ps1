@@ -1,3 +1,6 @@
+# Taskbar pins go here: 
+# %AppData%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar
+
 if ($installFirefox) {
     Write-Host "Installing Firefox..."
     winget install --id "Mozilla.Firefox.DeveloperEdition.en-GB" --exact --accept-package-agreements --accept-source-agreements
