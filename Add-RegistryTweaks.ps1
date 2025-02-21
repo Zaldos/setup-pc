@@ -6,11 +6,24 @@ New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" | Set-I
 Write-Host "Removing sponsored link shortcuts in Edge for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageHideDefaultTopSites" -Value 1
 
-Write-Host "Defaulting to Google search in browser for everyone"
-New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "DefaultSearchProviderEnabled" -Value 1
-New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "DefaultSearchProviderName" -Value "Google"
-New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "DefaultSearchProviderSearchURL" -Value "{google:baseURL}search?q=%s&{google:RLZ}{google:originalQueryForSuggestion}{google:assistedQueryStats}{google:searchFieldtrialParameter}{google:iOSSearchLanguage}{google:searchClient}{google:sourceId}{google:contextualSearchVersion}ie={inputEncoding}"
-New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "DefaultSearchProviderSuggestURL" -Value "{google:baseURL}complete/search?output=chrome&q={searchTerms}"
+Write-Host "Setting Edge to 'NotDotTrack'"
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "ConfigureDoNotTrack" -Value 1
+
+Write-Host "Setting Edge to block unwated apps"
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "SmartScreenPuaEnabled" -Value 1
+
+<#
+RestoreOnStartupIsNewTabPage (5) = Open a new tab
+RestoreOnStartupIsLastSession (1) = Restore the last session
+#>
+Write-Host "Edge will restore tabs from last session"
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "RestoreOnStartup" -Value 1
+
+Write-Host "Disabling Edge's 'shopping assistant'"
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "EdgeShoppingAssistantEnabled" -Value 0
+
+Write-Host "Disabling windows feedback suggestions"
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" | Set-ItemProperty -Name "DoNotShowFeedbackNotifications" -Value 1
 
 if (-not ($configuration -eq "PARENT")) {
     Write-Host "Showing file types for user"
