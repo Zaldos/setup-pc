@@ -12,6 +12,11 @@ catch {
     Write-Host $_
 }
 
+if ($oldRightClickMenu) {
+    Write-Host "Restoring old right click menu"
+    New-ItemOrGet -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" | Set-ItemProperty -Name "(Default)" -Value ""
+}
+
 Write-Host "Disable 5xshift key for sticky keys"
 New-ItemOrGet -Path "HKCU:\Control Panel\Accessibility\StickyKeys" | Set-ItemProperty -Name "Flags" -Value "506"
 

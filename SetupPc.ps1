@@ -21,7 +21,7 @@ $disableTelemetry = $true
 $hideNewsAndInterests = $true # Only registry toggles not app removals
 $removeNewsAndInterests = $true # Removes the app too in Remove-AppxJunk.ps1
 
-$oldRightClickMenu = $true #TODO
+$oldRightClickMenu = $true
 $disableMsAccounts = $false #TODO
 
 $installApps = $false
