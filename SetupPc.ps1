@@ -11,7 +11,9 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # $configuration = "PARENT"
 # $configuration = "WORK"
 $configuration = "HOME"
-# $DebugPreference = "Continue" # Comment out to hide debug messages
+
+$DebugPreference = "SilentlyContinue" # Debug messages off
+# $DebugPreference = "Continue" # Debug messages on
 
 Write-Host "Using $configuration configuration"
 
@@ -47,8 +49,8 @@ catch {
 
 function Restart-Processes {
     Write-Host "Restarting explorer..."
-    taskkill /f /im "explorer.exe"
-    Start-Process "explorer.exe"
+    taskkill /f /im "explorer.exe" | Write-Debug
+    Start-Process "explorer.exe" | Write-Debug
     Write-Host "Explorer restarted"
 
     taskkill /f /im "msedge.exe"
