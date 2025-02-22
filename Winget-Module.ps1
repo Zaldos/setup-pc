@@ -14,7 +14,12 @@ function Test-WingetExists($id) {
 function Remove-WingetIfExists($id) {
     if (Test-WingetExists($id)) {
         Write-Host "Winget uninstalling $id"
-        winget uninstall --id $id
+        if ($DebugPreference -eq 'SilentlyContinue') {
+            winget uninstall --id $id --silent
+        }
+        else {
+            winget uninstall --id $id
+        }
         Write-Host "Winget uninstall complete" -ForegroundColor Green
     }
 }
