@@ -52,4 +52,31 @@ if ($configuration -eq "HOME") {
     New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "StartupBoostEnabled" -Value 0
 }
 
+if ($hideNewsAndInterests) {
+    Write-Host "Hiding news and interests for everyone"
+    # News and interests (w10)
+    New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 0
+
+    # Taskbar news (w11)
+    New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Set-ItemProperty -Name "AllowNewsAndInterests" -Value 0
+    Stop-Process -Name Widgets, WidgetService -ErrorAction SilentlyContinue
+
+    # Edge news
+    Write-Host "Hiding news and interests in Edge for everyone"
+    New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageContentEnabled" -Value 0
+}
+else {
+    Write-Host "Showing news and interests for everyone"
+    # All should start after explorer restart
+    # News and interests (w10)
+    New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 1
+
+    # Taskbar news (w11)
+    New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Set-ItemProperty -Name "AllowNewsAndInterests" -Value 1
+    
+    # Edge news
+    Write-Host "Showing news and interests in Edge for everyone"
+    Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name "NewTabPageContentEnabled"
+}
+
 Write-Host "Registry tweeaks done!`n"
