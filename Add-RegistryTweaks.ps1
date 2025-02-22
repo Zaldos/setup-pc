@@ -6,23 +6,23 @@ New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" | Set-I
 Write-Host "Removing sponsored link shortcuts in Edge for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageHideDefaultTopSites" -Value 1
 
-Write-Host "Setting Edge to 'NotDotTrack'"
+Write-Host "Setting Edge to 'NotDotTrack' for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "ConfigureDoNotTrack" -Value 1
 
-Write-Host "Setting Edge to block unwated apps"
+Write-Host "Setting Edge to block unwated apps as recommended"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "SmartScreenPuaEnabled" -Value 1
 
 <#
 RestoreOnStartupIsNewTabPage (5) = Open a new tab
 RestoreOnStartupIsLastSession (1) = Restore the last session
 #>
-Write-Host "Edge will restore tabs from last session"
+Write-Host "Edge will restore tabs from last session as recommended"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "RestoreOnStartup" -Value 1
 
-Write-Host "Disabling Edge's 'shopping assistant'"
+Write-Host "Disabling Edge's 'shopping assistant' as recommended"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "EdgeShoppingAssistantEnabled" -Value 0
 
-Write-Host "Disabling windows feedback suggestions"
+Write-Host "Disabling windows feedback suggestions for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" | Set-ItemProperty -Name "DoNotShowFeedbackNotifications" -Value 1
 
 if (-not ($configuration -eq "PARENT")) {
@@ -51,3 +51,5 @@ if ($configuration -eq "HOME") {
     Write-Host "Preventing edge running in background for everyone"
     New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "StartupBoostEnabled" -Value 0
 }
+
+Write-Host "Registry tweeaks done!`n"

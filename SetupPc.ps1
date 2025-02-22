@@ -41,6 +41,7 @@ try {
 catch {
     Write-Host $_
     Read-Host
+    exit -1
 }
 
 function Restart-Processes {
