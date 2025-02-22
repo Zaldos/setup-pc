@@ -57,8 +57,11 @@ if ($installAdblock) {
 }
 
 if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
+    Write-Host "Installing modern powershell"
+    # https://github.com/PowerShell/PowerShell/issues/25068
+    winget install Microsoft.Powershell --scope machine -a x64  --installer-type wix
+
     $apps = @(
-        "Microsoft.Powershell" # pwsh 7
         "voidtools.Everything"
         "Microsoft.PowerToys"
         "Git.Git"
