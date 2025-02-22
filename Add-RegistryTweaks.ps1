@@ -115,4 +115,7 @@ else {
     Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name "NewTabPageContentEnabled"
 }
 
+Write-Host "Removing all taskbar pins"
+Remove-Item "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Recurse -Force
+
 Write-Host "Registry tweeaks done!`n"
