@@ -42,14 +42,8 @@ New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty 
 Write-Host "Setting Edge to block unwated apps as recommended"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "SmartScreenPuaEnabled" -Value 1
 
+Write-Host "Disabling Edge sidebar as recommended"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "HubsSidebarEnabled" -Value 0
-
-<#
-RestoreOnStartupIsNewTabPage (5) = Open a new tab
-RestoreOnStartupIsLastSession (1) = Restore the last session
-#>
-Write-Host "Edge will restore tabs from last session as recommended"
-New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "RestoreOnStartup" -Value 1
 
 Write-Host "Disabling Edge's 'shopping assistant' as recommended"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "EdgeShoppingAssistantEnabled" -Value 0

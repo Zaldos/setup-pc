@@ -22,7 +22,6 @@ $hideNewsAndInterests = $true # Only registry toggles not app removals
 $removeNewsAndInterests = $true # Removes the app too in Remove-AppxJunk.ps1
 
 $oldRightClickMenu = $true
-$disableMsAccounts = $false #TODO
 
 $installApps = $false
 $installAdblock = $true # Will force UblockOrigin onto your browser :)
@@ -69,22 +68,12 @@ try {
     . .\Remove-WingetApps.ps1
     . .\Remove-AppxJunk.ps1
     . .\Remove-Telemetry.ps1
-  
-    # if ($disableMsAccounts) {
-    #     # these three dont do anything, maybe need restart
-    #     New-ItemOrGet -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" | Set-ItemProperty -Name "NoConnectedUser" -Value 3
-    #     New-ItemOrGet -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Settings\AllowYourAccount" | Set-ItemProperty -Name "value" -Value 0
-    #     New-ItemOrGet -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Settings\AllowSignInOptions" | Set-ItemProperty -Name "value" -Value 0
-    # }
-    # else {
-    #     Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "NoConnectedUser"
-    # }
-    
-    Restart-Processes
 
     if ($installApps) {
         . .\Add-Apps.ps1 #should go last? Move out registry toggles}
     }
+
+    Restart-Processes
 }
 catch {
     Write-Host $_.Exception
