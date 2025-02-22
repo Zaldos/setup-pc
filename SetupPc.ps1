@@ -16,7 +16,8 @@ $configuration = "HOME"
 Write-Host "Using $configuration configuration"
 
 $disableTelemetry = $true
-$resetNewsAndInterestsRegistry = $false #only registry toggles not app removals
+$hideNewsAndInterests = $true # Only registry toggles not app removals
+$removeNewsAndInterests = $true # Removes the app too in Remove-AppxJunk.ps1
 
 $oldRightClickMenu = $true #TODO
 $disableMsAccounts = $false #TODO
@@ -67,18 +68,8 @@ try {
     . .\Remove-AppxJunk.ps1
     . .\Remove-Telemetry.ps1
   
-    if ($resetNewsAndInterestsRegistry) {
-        # All should start after explorer restart
-        # News and interests (w10)
-        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 1
-
-        # Taskbar news (w11)
-        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Set-ItemProperty -Name "AllowNewsAndInterests" -Value 1
-        
-        # Edge news
-        Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name "NewTabPageContentEnabled"
-    }
-    else {
+    if ($hideNewsAndInterests) {
+        Write-Host "Hiding news and interests for everyone"
         # News and interests (w10)
         New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 0
 
@@ -87,7 +78,21 @@ try {
         Stop-Process -Name Widgets, WidgetService -ErrorAction SilentlyContinue
 
         # Edge news
+        Write-Host "Hiding news and interests in Edge for everyone"
         New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageContentEnabled" -Value 0
+    }
+    else {
+        Write-Host "Showing news and interests for everyone"
+        # All should start after explorer restart
+        # News and interests (w10)
+        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds\" | Set-ItemProperty -Name "EnableFeeds" -Value 1
+
+        # Taskbar news (w11)
+        New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" | Set-ItemProperty -Name "AllowNewsAndInterests" -Value 1
+        
+        # Edge news
+        Write-Host "Showing news and interests in Edge for everyone"
+        Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name "NewTabPageContentEnabled"
     }
 
     # if ($disableMsAccounts) {

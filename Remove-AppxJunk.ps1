@@ -38,7 +38,6 @@ switch ($configuration) {
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
             "Microsoft.ZuneMusic"
-            "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
             "Microsoft.GamingApp" # The XBOX app
             "Microsoft.Xbox.TCUI" # XBOX Live
         )
@@ -58,7 +57,6 @@ switch ($configuration) {
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
             "Microsoft.ZuneMusic"
-            "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
             "Microsoft.Teams"
             "MSTeams"
         )
@@ -79,7 +77,6 @@ switch ($configuration) {
             "Microsoft.YourPhone"
             "*SolitaireCollection*"
             "Microsoft.ZuneMusic"
-            "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
             "Microsoft.MicrosoftOfficeHub" #MS Office
             "Microsoft.Teams"
             "MSTeams"
@@ -89,6 +86,12 @@ switch ($configuration) {
     default {
         $appsToRemove = @()
     }
+}
+
+if ($removeNewsAndInterests) {
+    $appsToRemove += @(
+        "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
+    )
 }
 
 foreach ($app in $appsToRemove) {
@@ -119,4 +122,8 @@ foreach ($app in $appsToRemove) {
         }
     }
     Write-Host ""
+}
+
+if ($appsToRemove.Count -gt 0) {
+    Write-Host "Appx removals done!`n"
 }
