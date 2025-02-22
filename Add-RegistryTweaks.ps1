@@ -1,5 +1,18 @@
 . .\Registry-Module.ps1
 
+Write-Host "Attempting to enable hibernate"
+try {
+    powercfg /hibernate on
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Hibernation enabled"
+    }
+}
+catch {
+    Write-Host "Unble to enable hibernation"
+    Write-Host $_
+}
+
+
 Write-Host "Disabling start menu badgering you for login for everyone"
 New-ItemOrGet -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" | Set-ItemProperty -Name "Start_AccountNotifications" -Value 0
 
