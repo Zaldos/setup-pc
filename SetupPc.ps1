@@ -53,8 +53,8 @@ function Restart-Processes {
     Start-Process "explorer.exe" | Write-Debug
     Write-Host "Explorer restarted"
 
-    taskkill /f /im "msedge.exe"
-    taskkill /f /im "MicrosoftEdgeUpdate.exe"
+    taskkill /f /im "msedge.exe" | Write-Debug
+    taskkill /f /im "MicrosoftEdgeUpdate.exe" | Write-Debug
 }
 
 ###########
