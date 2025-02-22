@@ -10,9 +10,9 @@
 "Microsoft.Wallet"
 "Microsoft.WindowsFeedbackHub"
 "Microsoft.WindowsMaps"
-"Microsoft.YourPhone"
+"Microsoft.YourPhone" # Phone link
 "*SolitaireCollection*"
-"Microsoft.ZuneMusic"
+"Microsoft.ZuneMusic" # New Windows Media Player
 "MicrosoftWindows.Client.WebExperience" #Taskbar news and weather widget
 "Microsoft.MicrosoftOfficeHub" #MS Office
 "Microsoft.Teams"
@@ -35,9 +35,8 @@ switch ($configuration) {
             "Microsoft.Wallet"
             "Microsoft.WindowsFeedbackHub"
             "Microsoft.WindowsMaps"
-            "Microsoft.YourPhone"
+            "Microsoft.YourPhone" # Phone link
             "*SolitaireCollection*"
-            "Microsoft.ZuneMusic"
             "Microsoft.GamingApp" # The XBOX app
             "Microsoft.Xbox.TCUI" # XBOX Live
         )
@@ -54,9 +53,8 @@ switch ($configuration) {
             "Microsoft.Wallet"
             "Microsoft.WindowsFeedbackHub"
             "Microsoft.WindowsMaps"
-            "Microsoft.YourPhone"
+            "Microsoft.YourPhone" # Phone link
             "*SolitaireCollection*"
-            "Microsoft.ZuneMusic"
             "Microsoft.Teams"
             "MSTeams"
         )
@@ -74,9 +72,9 @@ switch ($configuration) {
             "Microsoft.Wallet"
             "Microsoft.WindowsFeedbackHub"
             "Microsoft.WindowsMaps"
-            "Microsoft.YourPhone"
+            "Microsoft.YourPhone" # Phone link
             "*SolitaireCollection*"
-            "Microsoft.ZuneMusic"
+            "Microsoft.ZuneMusic" # New Windows Media Player
             "Microsoft.MicrosoftOfficeHub" #MS Office
             "Microsoft.Teams"
             "MSTeams"
