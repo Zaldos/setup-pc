@@ -36,6 +36,9 @@ New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty 
 Remove-Item "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" 
 New-ItemOrGet -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" | Set-ItemProperty -Name "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" -Value 1
 
+Write-Host "Removing Edge's 'trending' searches"
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "AddressBarTrendingSuggestEnabled" -Value 0
+
 Write-Host "Setting Edge to 'NotDotTrack' for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "ConfigureDoNotTrack" -Value 1
 
