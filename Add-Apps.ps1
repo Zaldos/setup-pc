@@ -1,6 +1,9 @@
 # Taskbar pins go here: 
 # %AppData%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar
 
+# Start menu pins:
+# %appdata%\Microsoft\Windows\Start Menu\Programs
+
 if ($installFirefox) {
     Write-Host "Installing Firefox..."
     winget install --id "Mozilla.Firefox.DeveloperEdition.en-GB" --exact --accept-package-agreements --accept-source-agreements
@@ -41,6 +44,16 @@ if ($installChrome) {
         # Added as recommended
         # New-ItemOrGet -Path "HKLM:\Software\Wow6432Node\Google\Chrome\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm" | Set-ItemProperty -Name "update_url" -Value "https://clients2.google.com/service/update2/crx"
     }
+}
+
+# If custom browser remove Edge from desktop
+# One location is C:\Users\Public\Desktop
+if($installFirefox -or $installChrome){
+    $edge = Get-ChildItem "C:\Users\Public\Desktop" | Where-Object -Property Name -like "*Microsoft Edge*"
+    if(-not($null -eq $edge)){
+        Remove-Item $edge.FullName
+    }
+
 }
 
 # Enables Manifest v2 extensions # https://learn.microsoft.com/en-us/DeployEdge/microsoft-edge-policies#extensionmanifestv2availability
