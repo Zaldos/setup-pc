@@ -1,8 +1,14 @@
 Write-Host "Disabling Explorer HelpPane F1 shortcut (see Remove-F1HelpShortcut.ps1 to revert)" -NoNewline
 # taskkill /f /im "HelpPane.exe"
 Stop-Process -Name "HelpPane" -Force -ErrorAction SilentlyContinue
-takeown /f "c:\windows\HelpPane.exe"
-icacls "c:\windows\HelpPane.exe" /deny "Everyone:(X)"
+if ($DebugPreference -eq 'SilentlyContinue') {
+    takeown /f "c:\windows\HelpPane.exe" | Out-Null
+    icacls "c:\windows\HelpPane.exe" /deny "Everyone:(X)" | Out-Null
+} else {
+    takeown /f "c:\windows\HelpPane.exe"   
+    icacls "c:\windows\HelpPane.exe" /deny "Everyone:(X)"
+}
+
 Write-Host ""
 
 # Revert with this:
