@@ -12,6 +12,11 @@ catch {
     Write-Host $_
 }
 
+Write-Host "Disable 5xshift key for sticky keys"
+New-ItemOrGet -Path "HKCU:\Control Panel\Accessibility\StickyKeys" | Set-ItemProperty -Name "Flags" -Value "506"
+
+Write-Host "Disable 8sec of right shift key for filter keys"
+New-ItemOrGet -Path "HKCU:\Control Panel\Accessibility\Keyboard Response" | Set-ItemProperty -Name "Flags" -Value "122"
 
 Write-Host "Disabling start menu badgering you for login for everyone"
 New-ItemOrGet -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" | Set-ItemProperty -Name "Start_AccountNotifications" -Value 0
@@ -31,6 +36,8 @@ New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty 
 
 Write-Host "Setting Edge to block unwated apps as recommended"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "SmartScreenPuaEnabled" -Value 1
+
+New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-ItemProperty -Name "HubsSidebarEnabled" -Value 0
 
 <#
 RestoreOnStartupIsNewTabPage (5) = Open a new tab
@@ -59,7 +66,11 @@ if (-not ($configuration -eq "PARENT")) {
     New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" | Set-ItemProperty -Name "Hidden" -Value 1
 
     Write-Host "Hiding taskbar search box for user"
-    New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" | Set-ItemProperty -Name "SearchboxTaskbarMode" -Value 0   
+    New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" | Set-ItemProperty -Name "SearchboxTaskbarMode" -Value 0
+    
+    Write-Host "Setting dark mode in apps and system for user"
+    New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" | Set-ItemProperty -Name "AppsUseLightTheme" -Value 0
+    New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" | Set-ItemProperty -Name "SystemUsesLightTheme" -Value 0
 }
 
 if (-not ($configuration -eq "WORK")) {

@@ -53,7 +53,6 @@ if($installFirefox -or $installChrome){
     if(-not($null -eq $edge)){
         Remove-Item $edge.FullName
     }
-
 }
 
 # Enables Manifest v2 extensions # https://learn.microsoft.com/en-us/DeployEdge/microsoft-edge-policies#extensionmanifestv2availability
