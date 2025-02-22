@@ -52,6 +52,9 @@ New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge\Recommended" | Set-I
 Write-Host "Disabling windows feedback suggestions for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" | Set-ItemProperty -Name "DoNotShowFeedbackNotifications" -Value 1
 
+Write-Host "Disabling annoying 'suggested' notifications for user"
+New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.Suggested" | Set-ItemProperty -Name "Enabled" -Value 0
+
 if (-not ($configuration -eq "PARENT")) {
     Write-Host "Showing file types for user"
     New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" | Set-ItemProperty -Name "HideFileExt" -Value 0

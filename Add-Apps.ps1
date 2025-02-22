@@ -48,11 +48,14 @@ if ($installChrome) {
 
 # If custom browser remove Edge from desktop
 # One location is C:\Users\Public\Desktop
-if($installFirefox -or $installChrome){
+if ($installFirefox -or $installChrome) {
     $edge = Get-ChildItem "C:\Users\Public\Desktop" | Where-Object -Property Name -like "*Microsoft Edge*"
-    if(-not($null -eq $edge)){
+    if (-not($null -eq $edge)) {
         Remove-Item $edge.FullName
     }
+}
+else {
+    Write-Host "Using edge? Disable copilot here: edge://settings/sidebar/appSettings?hubApp=cd4688a9-e888-48ea-ad81-76193d56b1be"
 }
 
 # Enables Manifest v2 extensions # https://learn.microsoft.com/en-us/DeployEdge/microsoft-edge-policies#extensionmanifestv2availability
