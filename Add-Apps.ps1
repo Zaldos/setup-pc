@@ -5,7 +5,7 @@
 # %appdata%\Microsoft\Windows\Start Menu\Programs
 
 if ($installFirefox) {
-    Write-Host "Installing Firefox..."
+    Write-Host "Installing Firefox Developer..."
     winget install --id "Mozilla.Firefox.DeveloperEdition.en-GB" --exact --accept-package-agreements --accept-source-agreements
     # winget install --id Mozilla.Firefox --exact --accept-package-agreements --accept-source-agreements
     Write-Host "Firefox installed"
