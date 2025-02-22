@@ -1,10 +1,17 @@
 . .\Registry-Module.ps1
 
+Write-Host "Disabling start menu badgering you for login for everyone"
+New-ItemOrGet -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" | Set-ItemProperty -Name "Start_AccountNotifications" -Value 0
+
 Write-Host "Disabling start search searching the web for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" | Set-ItemProperty -Name "DisableSearchBoxSuggestions" -Value 1
 
 Write-Host "Removing sponsored link shortcuts in Edge for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageHideDefaultTopSites" -Value 1
+
+# Hides the spotlight shortcut on desktop
+Remove-Item "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" 
+New-ItemOrGet -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" | Set-ItemProperty -Name "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" -Value 1
 
 Write-Host "Setting Edge to 'NotDotTrack' for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "ConfigureDoNotTrack" -Value 1
