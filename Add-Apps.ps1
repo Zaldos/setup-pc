@@ -12,11 +12,24 @@ if ($installFirefox) {
 
     # Disable Firefox Pocket
     # Software\Policies\Mozilla\Firefox\DisablePocket
+    Write-Host "Disabling pocket in Firefox"
     New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox" | Set-ItemProperty -Name "DisablePocket" -Value 1
 
-    # https://mozilla.github.io/policy-templates/#firefoxhome
-    
+    # https://mozilla.github.io/policy-templates/#homepage
+    Write-Host "Making Firefox restore previous sessions"
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox\Homepage" | Set-ItemProperty -Name "StartPage" -Value "previous-session"
 
+    # https://mozilla.github.io/policy-templates/#firefoxhome
+    Write-Host "Setting up Firefox homepage"
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox\FirefoxHome" | Set-ItemProperty -Name "Search" -Value 1
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox\FirefoxHome" | Set-ItemProperty -Name "SponsoredTopSites" -Value 0
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox\FirefoxHome" | Set-ItemProperty -Name "Highlights" -Value 0
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox\FirefoxHome" | Set-ItemProperty -Name "Pocket" -Value 0
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox\FirefoxHome" | Set-ItemProperty -Name "SponsoredPocket" -Value 0
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox\FirefoxHome" | Set-ItemProperty -Name "Snippets" -Value 0
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox" | Set-ItemProperty -Name "NoDefaultBookmarks" -Value 1
+    New-ItemOrGet -Path "HKLM:\Software\Policies\Mozilla\Firefox" | Set-ItemProperty -Name "DisplayBookmarksToolbar" -Value "newtab"
+    
     if ($installAdblock) {
         Write-Host "Adding Ublock Origin to Firefox"
         # https://mozilla.github.io/policy-templates/#extensionsettings
