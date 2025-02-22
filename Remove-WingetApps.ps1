@@ -6,4 +6,4 @@ if ($configuration -eq "HOME" -or $configuration -eq "PARENT") {
 }
 
 Remove-WingetIfExists("Microsoft.DevHome")
-Write-Host "Winget removals done`n"
+Write-Host "Winget removals done!`n"
