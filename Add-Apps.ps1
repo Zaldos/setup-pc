@@ -73,9 +73,9 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         winget install --id "$id" --exact --source winget --accept-package-agreements --accept-source-agreements
     }
 
-    # Remove Voidtools.Everything desktop shortcut
+    # Remove Voidtools.Everything desktop shortcut and add to right click menu
     if (-not ($null -eq ($everything = (Get-Process -name everything)))) {
-        & ($everything.Path) -uninstall-desktop-shortcut
+        & ($everything[0].Path) -uninstall-desktop-shortcut -install-folder-context-menu
     }
 
     # https://github.com/microsoft/winget-cli/discussions/1798#discussioncomment-7812764
