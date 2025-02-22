@@ -18,14 +18,13 @@ Write-Host "Using $configuration configuration"
 $disableTelemetry = $true
 $resetNewsAndInterestsRegistry = $false #only registry toggles not app removals
 
-$installAdblock = $true # Will force UblockOrigin onto your browser :)
-$installFirefox = $true
-$installChrome = $false
-
 $oldRightClickMenu = $true #TODO
 $disableMsAccounts = $false #TODO
 
-$skipAddingApps = $true
+$installApps = $false
+$installAdblock = $true # Will force UblockOrigin onto your browser :)
+$installFirefox = $true
+$installChrome = $false
 
 Set-Location "$PSScriptRoot"
 
@@ -102,7 +101,7 @@ try {
     
     Restart-Processes
 
-    if (-not $skipAddingApps) {
+    if ($installApps) {
         . .\Add-Apps.ps1 #should go last? Move out registry toggles}
     }
 }
