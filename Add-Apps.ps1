@@ -73,6 +73,11 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         winget install --id "$id" --exact --source winget --accept-package-agreements --accept-source-agreements
     }
 
+    # Remove Voidtools.Everything desktop shortcut
+    if (-not ($null -eq ($everything = (Get-Process -name everything)))) {
+        & ($everything.Path) -uninstall-desktop-shortcut
+    }
+
     # https://github.com/microsoft/winget-cli/discussions/1798#discussioncomment-7812764
     # https://github.com/microsoft/vscode/blob/main/build/win32/code.iss#L81
     winget install --id "Microsoft.VisualStudioCode" --override '/VERYSILENT /SP- /MERGETASKS="!runcode,!desktopicon,quicklaunchicon,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"' --exact --source winget --accept-package-agreements --accept-source-agreements

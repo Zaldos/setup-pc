@@ -11,7 +11,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # $configuration = "PARENT"
 # $configuration = "WORK"
 $configuration = "HOME"
-$DebugPreference = "Continue" # Comment out to hide debug messages
+# $DebugPreference = "Continue" # Comment out to hide debug messages
 
 Write-Host "Using $configuration configuration"
 
@@ -19,7 +19,7 @@ $disableTelemetry = $true
 $resetNewsAndInterestsRegistry = $false #only registry toggles not app removals
 
 $installAdblock = $true # Will force UblockOrigin onto your browser :)
-$installFirefox = $false
+$installFirefox = $true
 $installChrome = $false
 
 $oldRightClickMenu = $true #TODO
