@@ -150,14 +150,23 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
 }
 
 if ($configuration -eq "HOME") {
-    $vsDestination = "$($env:USERPROFILE)/Downloads/VisualStudioCommunity.exe"
+    . .\Download-Module.ps1
+    $vsDestination = "$($env:USERPROFILE)\Downloads\VisualStudioCommunity.exe"
     Write-Host "Downloading VS Community installer to <$vsDestination>"
-    Invoke-WebRequest "https://aka.ms/vs/17/release/vs_community.exe" -OutFile $vsDestination
+    Download-File "https://aka.ms/vs/17/release/vs_community.exe" -OutFile $vsDestination
     $openDownloads = $true
 }
 if ($configuration -eq "WORK") {
-    $vsDestination = "$($env:USERPROFILE)/Downloads/VisualStudioProfessional.exe"
+    . .\Download-Module.ps1
+    $vsDestination = "$($env:USERPROFILE)\Downloads\VisualStudioProfessional.exe"
     Write-Host "Downloading VS Professional installer to <$vsDestination>"
-    Invoke-WebRequest "https://aka.ms/vs/17/release/vs_professional.exe" -OutFile $vsDestination
+    Download-File "https://aka.ms/vs/17/release/vs_professional.exe" -OutFile $vsDestination
+    $openDownloads = $true
+}
+if (-not ($configuration -eq "PARENT")) {
+    . .\Download-Module.ps1
+    $dotUltimateDest = "$($env:USERPROFILE)\Downloads\DotUltimate.exe"
+    Write-Host "Downloading DotUltimate installer to <$dotUltimateDest>"
+    Download-File "https://download-cdn.jetbrains.com/resharper/dotUltimate.2024.3.5/JetBrains.dotUltimate.2024.3.5.web.exe" -OutFile $dotUltimateDest
     $openDownloads = $true
 }
