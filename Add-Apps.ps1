@@ -149,3 +149,15 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
 
 }
 
+if ($configuration -eq "HOME") {
+    $vsDestination = "$($env:USERPROFILE)/Downloads/VisualStudioCommunity.exe"
+    Write-Host "Downloading VS Community installer to <$vsDestination>"
+    Invoke-WebRequest "https://aka.ms/vs/17/release/vs_community.exe" -OutFile $vsDestination
+    $openDownloads = $true
+}
+if ($configuration -eq "WORK") {
+    $vsDestination = "$($env:USERPROFILE)/Downloads/VisualStudioProfessional.exe"
+    Write-Host "Downloading VS Professional installer to <$vsDestination>"
+    Invoke-WebRequest "https://aka.ms/vs/17/release/vs_professional.exe" -OutFile $vsDestination
+    $openDownloads = $true
+}

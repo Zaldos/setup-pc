@@ -23,7 +23,7 @@ $removeNewsAndInterests = $true # Removes the app too in Remove-AppxJunk.ps1
 
 $oldRightClickMenu = $true
 
-$installApps = $false
+$installApps = $true
 $installAdblock = $true # Will force UblockOrigin onto your browser :)
 $installFirefox = $true
 $installChrome = $false
@@ -74,6 +74,11 @@ try {
     }
 
     Restart-Processes
+    
+    Start-Sleep -Seconds 2
+    if($true -eq $openDownloads){
+        explorer.exe "$($env:USERPROFILE)/Downloads"
+    }
 }
 catch {
     Write-Host $_.Exception
