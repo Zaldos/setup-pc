@@ -89,20 +89,23 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     # https://github.com/PowerShell/PowerShell/issues/25068
     winget install Microsoft.Powershell --scope machine -a x64  --installer-type wix
 
-    $apps = @(
-        "voidtools.Everything"
+    $machineWideApps = @(
+        "voidtools.Everything" # Best file search
         "Microsoft.PowerToys"
         "Git.Git"
-        "Kubernetes.kubectl"
-        "ahmetb.kubectx"
-        "ahmetb.kubens"
-        "Derailed.k9s"
-        "File-New-Project.EarTrumpet"
+        "Kubernetes.kubectl" # K8s cli
+        "ahmetb.kubectx" # K8s context switching
+        "ahmetb.kubens" # K8s namespace switching
+        "Derailed.k9s" # K8s Terminal Gui
+        "File-New-Project.EarTrumpet" # Better volume and audio control
+        "emoacht.Monitorian" # Brightness control
+        "UderzoSoftware.SpaceSniffer" # Great disk space visualisation tool
     )
 
-    foreach ($id in $apps) {
-        Write-Host "Installing $id"
-        winget install --id "$id" --exact --source winget --accept-package-agreements --accept-source-agreements
+    foreach ($id in $machineWideApps) {
+        Write-Host "Installing $id machine wide"
+        winget install --id "$id" --exact --source winget --scope machine `
+            --accept-package-agreements --accept-source-agreements 
     }
 
     # Remove Voidtools.Everything desktop shortcut and add to right click menu
