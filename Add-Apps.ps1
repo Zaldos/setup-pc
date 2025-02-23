@@ -97,6 +97,7 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         "ahmetb.kubectx"
         "ahmetb.kubens"
         "Derailed.k9s"
+        "File-New-Project.EarTrumpet"
     )
 
     foreach ($id in $apps) {
