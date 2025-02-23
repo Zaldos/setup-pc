@@ -169,4 +169,9 @@ if (-not ($configuration -eq "PARENT")) {
     Write-Host "Downloading DotUltimate installer to <$dotUltimateDest>"
     Download-File "https://download-cdn.jetbrains.com/resharper/dotUltimate.2024.3.5/JetBrains.dotUltimate.2024.3.5.web.exe" -OutFile $dotUltimateDest
     $openDownloads = $true
+
+    $dockerDest = "$($env:USERPROFILE)\Downloads\DockerInstaller (only run after restart to enable wsl).exe"
+    Write-Host "Downloading Docker installer to <$dockerDest>"
+    Download-File "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe" -OutFile $dockerDest
+    $openDownloads = $true
 }

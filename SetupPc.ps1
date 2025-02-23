@@ -8,6 +8,21 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Useful
 # $all = Get-AppxPackage "*OneDrive*" -allusers; $all | Select-Object -Property Name, InstallLocation | Sort-Object -Property Name
 
+##########################################################
+<#
+ $$$$$$\   $$$$$$\  $$\   $$\ $$$$$$$$\ $$$$$$\  $$$$$$\  
+$$  __$$\ $$  __$$\ $$$\  $$ |$$  _____|\_$$  _|$$  __$$\ 
+$$ /  \__|$$ /  $$ |$$$$\ $$ |$$ |        $$ |  $$ /  \__|
+$$ |      $$ |  $$ |$$ $$\$$ |$$$$$\      $$ |  $$ |$$$$\ 
+$$ |      $$ |  $$ |$$ \$$$$ |$$  __|     $$ |  $$ |\_$$ |
+$$ |  $$\ $$ |  $$ |$$ |\$$$ |$$ |        $$ |  $$ |  $$ |
+\$$$$$$  | $$$$$$  |$$ | \$$ |$$ |      $$$$$$\ \$$$$$$  |
+ \______/  \______/ \__|  \__|\__|      \______| \______/ 
+
+Please check config values below
+#> #######################################################
+
+
 # $configuration = "PARENT"
 # $configuration = "WORK"
 $configuration = "HOME"
@@ -17,7 +32,7 @@ $DebugPreference = "SilentlyContinue" # Debug messages off
 
 Write-Host "Using $configuration configuration"
 
-$disableTelemetry = $true
+$disableTelemetry = $true # (pwsh and dotnet in all configs, home/parent windows telemetry too)
 $hideNewsAndInterests = $true # Only registry toggles not app removals
 $removeNewsAndInterests = $true # Removes the app too in Remove-AppxJunk.ps1
 
