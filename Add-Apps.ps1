@@ -94,6 +94,8 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         "File-New-Project.EarTrumpet" # Better volume and audio control
         "emoacht.Monitorian" # Brightness control
         "UderzoSoftware.SpaceSniffer" # Great disk space visualisation tool
+        "Python.Python.3.13"
+        "OpenJS.NodeJS"
     )
 
     foreach ($id in $machineWideApps) {
@@ -111,12 +113,38 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     # https://github.com/microsoft/vscode/blob/main/build/win32/code.iss#L81
     winget install --id "Microsoft.VisualStudioCode" --override '/VERYSILENT /SP- /MERGETASKS="!runcode,!desktopicon,quicklaunchicon,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"' --exact --source winget --accept-package-agreements --accept-source-agreements
 
+    # Reload path and call pip to add pre-commit
+    if ($configuration -eq "WORK") {
+        try {
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
+            pip install pre-commit
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "pip added pre-commit, maybe check <https://pre-commit.com/#automatically-enabling-pre-commit-on-repositories>" -ForegroundColor Green
+            }
+            else {
+                Write-Host "pip failed to add pre-commit" -ForegroundColor Red
+            }
+        }
+        catch {
+            Write-Host "pip failed to add pre-commit" -ForegroundColor Red
+            Write-Host $_
+        }
+    }
+
     try {
         # Configures git to use VS code as default editor
         &"C:\Program Files\Git\cmd\git.exe" config --global core.editor "code --wait"
     }
     catch {
         Write-Warning "Failed to set vscode as default editor for git"
+    }
+
+    try {
+        wsl --install
+        Write-Host "wsl installed, you will need to restart"
+    }
+    catch {
+        Write-Host "Unable to install wsl" -ForegroundColor Red
     }
 
 }
