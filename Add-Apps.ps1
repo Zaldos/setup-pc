@@ -79,6 +79,8 @@ if ($installAdblock) {
 }
 
 if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
+    Write-Host "As set to HOME or WORK, some apps will be installed for Dev work"
+
     Write-Host "Installing modern powershell"
     # https://github.com/PowerShell/PowerShell/issues/25068
     winget install Microsoft.Powershell --scope machine -a x64  --installer-type wix
@@ -174,7 +176,7 @@ if ($configuration -eq "WORK") {
     Download-File "https://aka.ms/vs/17/release/vs_professional.exe" -OutFile $vsDestination
     $openDownloads = $true
 }
-if (-not ($configuration -eq "PARENT")) {
+if ($configuration -eq "WORK" -or $configuration -eq "HOME") {
     . .\Download-Module.ps1
     $dotUltimateDest = "$($env:USERPROFILE)\Downloads\DotUltimate.exe"
     Write-Host "Downloading DotUltimate installer to <$dotUltimateDest>"

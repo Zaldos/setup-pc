@@ -57,7 +57,7 @@ New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" |
 Write-Host "Disabling annoying 'suggested' notifications for user"
 New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Windows.SystemToast.Suggested" | Set-ItemProperty -Name "Enabled" -Value 0
 
-if (-not ($configuration -eq "PARENT")) {
+if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     Write-Host "Showing file types for user"
     New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" | Set-ItemProperty -Name "HideFileExt" -Value 0
     
@@ -78,7 +78,7 @@ if (-not ($configuration -eq "PARENT")) {
     New-ItemOrGet -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" | Set-ItemProperty -Name "SystemUsesLightTheme" -Value 0
 }
 
-if (-not ($configuration -eq "WORK")) {
+if ($configuration -eq "PARENT" -or $configuration -eq "HOME") {
     Write-Host "Disabling delivery optimization for everyone"
     New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" | Set-ItemProperty -Name "DODownloadMode" -Value 0
 }
@@ -115,4 +115,4 @@ else {
     Remove-ItemPropertyIfExist -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name "NewTabPageContentEnabled"
 }
 
-Write-Host "Registry tweeaks done!`n"
+Write-Host "Registry tweaks done!`n"

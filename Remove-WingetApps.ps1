@@ -9,5 +9,5 @@ if($configuration -eq "WORK"){
     Remove-WingetIfExists("Microsoft.Teams.Classic", "old teams")
 }
 
-Remove-WingetIfExists("Microsoft.DevHome")
+Remove-WingetIfExists("Microsoft.DevHome", "deprecated app")
 Write-Host "Winget removals done!`n"

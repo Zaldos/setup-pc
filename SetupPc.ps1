@@ -18,9 +18,10 @@ $$ |  $$\ $$ |  $$ |$$ |\$$$ |$$ |        $$ |  $$ |  $$ |
 Please check config values below
 #> #######################################################
 
-
+# This configures which apps are added removed and some other tweaks.
+# Check each file for references to these to see what they effect in detail.
 # $configuration = "PARENT"
-# $configuration = "WORK"
+# $configuration = "WORK" # Main difference is installation of a few specific apps
 $configuration = "HOME"
 
 $DebugPreference = "SilentlyContinue" # Debug messages off
@@ -29,7 +30,8 @@ $DebugPreference = "SilentlyContinue" # Debug messages off
 Write-Host "Using $configuration configuration"
 
 $disableTelemetry = $true # (pwsh and dotnet in all configs, home/parent windows telemetry too)
-$hideNewsAndInterests = $true # Only registry toggles not app removals
+
+$hideNewsAndInterests = $true # Removes annoying taskbar news widget. Only registry toggles not app removals
 $removeNewsAndInterests = $true # Removes the app too in Remove-AppxJunk.ps1
 
 $oldRightClickMenu = $true

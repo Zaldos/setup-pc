@@ -104,7 +104,7 @@ foreach ($app in $appsToRemove) {
         }
     }
     else {
-        Write-Host "Lookign for and removing $app"
+        Write-Host "Looking for and removing $app"
         if ($null -eq (Get-AppxPackage "$app" -AllUsers)) {
             Write-Host "$app not found, skipping" -ForegroundColor DarkGray
         }
