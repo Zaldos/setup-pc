@@ -16,6 +16,7 @@ $$ |  $$\ $$ |  $$ |$$ |\$$$ |$$ |        $$ |  $$ |  $$ |
  \______/  \______/ \__|  \__|\__|      \______| \______/ 
 
 Please check config values below
+Once changed run .\SetupPc.ps1 from the terminal
 #> #######################################################
 
 # This configures which apps are added removed and some other tweaks.
