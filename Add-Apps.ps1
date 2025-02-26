@@ -163,7 +163,7 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     }
 
     try {
-        Write-Host "`nInstalling wsl 2 🐧"
+        Write-Host "`nInstalling wsl 2"
         wsl --install
         Write-Host "wsl installed, you will need to restart"
     }
