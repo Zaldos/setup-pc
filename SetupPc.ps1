@@ -91,7 +91,7 @@ try {
     
     Start-Sleep -Seconds 2
     if($true -eq $openDownloads){
-        explorer.exe "$($env:USERPROFILE)/Downloads"
+        explorer.exe "$($env:USERPROFILE)\Downloads"
     }
 }
 catch {
