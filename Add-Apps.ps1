@@ -81,7 +81,7 @@ if ($installAdblock) {
 if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     Write-Host "As set to HOME or WORK, some apps will be installed for Dev work"
 
-    Write-Host "Installing modern powershell"
+    Write-Host "`nInstalling modern powershell"
     # https://github.com/PowerShell/PowerShell/issues/25068
     winget install Microsoft.Powershell --scope machine -a x64  --installer-type wix
 
@@ -108,12 +108,13 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     }
 
     foreach ($id in $machineWideApps) {
-        Write-Host "Installing $id machine wide"
+        Write-Host "`nInstalling $id machine wide"
         winget install --id "$id" --exact --source winget --scope machine `
             --accept-package-agreements --accept-source-agreements 
     }
 
     # This app doesnt like machine wide installation
+    Write-Host "`nInstalling EarTrumpet (better audio control)"
     winget install --id "File-New-Project.EarTrumpet" # Better volume and audio control
 
     # Remove Voidtools.Everything desktop shortcut and add to right click menu
@@ -123,12 +124,14 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
 
     # https://github.com/microsoft/winget-cli/discussions/1798#discussioncomment-7812764
     # https://github.com/microsoft/vscode/blob/main/build/win32/code.iss#L81
+    Write-Host "`nInstalling VS Code"
     winget install --id "Microsoft.VisualStudioCode" --override '/VERYSILENT /SP- /MERGETASKS="!runcode,!desktopicon,quicklaunchicon,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"' --exact --source winget --accept-package-agreements --accept-source-agreements
 
     # Reload path and call pip to add pre-commit
     if ($configuration -eq "WORK") {
         try {
             $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
+            Write-Host "`nInstalling pre-commit"
             pip install pre-commit
             if ($LASTEXITCODE -eq 0) {
                 Write-Host "pip added pre-commit, maybe check <https://pre-commit.com/#automatically-enabling-pre-commit-on-repositories>" -ForegroundColor Green
@@ -145,18 +148,23 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
 
     try {
         # Configures git to use VS code as default editor
+        Write-Host "`nConfiguring Git's editor as VS Code"
         &"C:\Program Files\Git\cmd\git.exe" config --global core.editor "code --wait"
+        Write-Host "`nConfigured Git's editor as VS Code"
     }
     catch {
-        Write-Warning "Failed to set vscode as default editor for git"
+        Write-Warning "Failed to configure Git's editor as VS Code"
+        Write-Warning $_
     }
 
     try {
+        Write-Host "`nInstalling wsl 2 🐧"
         wsl --install
         Write-Host "wsl installed, you will need to restart"
     }
     catch {
-        Write-Host "Unable to install wsl" -ForegroundColor Red
+        Write-Warning "Unable to install wsl" -ForegroundColor Red
+        Write-Warning $_
     }
 
 }
@@ -164,26 +172,26 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
 if ($configuration -eq "HOME") {
     . .\Download-Module.ps1
     $vsDestination = "$($env:USERPROFILE)\Downloads\VisualStudioCommunity.exe"
-    Write-Host "Downloading VS Community installer to <$vsDestination>"
+    Write-Host "`nDownloading VS Community installer to <$vsDestination>"
     Download-File "https://aka.ms/vs/17/release/vs_community.exe" -OutFile $vsDestination
     $openDownloads = $true
 
     $dockerDest = "$($env:USERPROFILE)\Downloads\DockerInstaller (only run after restart to enable wsl).exe"
-    Write-Host "Downloading Docker installer to <$dockerDest>"
+    Write-Host "`nDownloading Docker installer to <$dockerDest>"
     Download-File "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe" -OutFile $dockerDest
     $openDownloads = $true
 }
 if ($configuration -eq "WORK") {
     . .\Download-Module.ps1
     $vsDestination = "$($env:USERPROFILE)\Downloads\VisualStudioProfessional.exe"
-    Write-Host "Downloading VS Professional installer to <$vsDestination>"
+    Write-Host "`nDownloading VS Professional installer to <$vsDestination>"
     Download-File "https://aka.ms/vs/17/release/vs_professional.exe" -OutFile $vsDestination
     $openDownloads = $true
 }
 if ($configuration -eq "WORK" -or $configuration -eq "HOME") {
     . .\Download-Module.ps1
     $dotUltimateDest = "$($env:USERPROFILE)\Downloads\DotUltimate.exe"
-    Write-Host "Downloading DotUltimate installer to <$dotUltimateDest>"
+    Write-Host "`nDownloading DotUltimate installer to <$dotUltimateDest>"
     Download-File "https://download-cdn.jetbrains.com/resharper/dotUltimate.2024.3.5/JetBrains.dotUltimate.2024.3.5.web.exe" -OutFile $dotUltimateDest
     $openDownloads = $true
 }
