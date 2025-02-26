@@ -1,12 +1,8 @@
 # Allow scripts to run, run it on both pwsh and powershell
 # Scoped
-<#
-# For user
+<# For user
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-.\Script.ps1
-#>
-# Useful
-# $all = Get-AppxPackage "*OneDrive*" -allusers; $all | Select-Object -Property Name, InstallLocation | Sort-Object -Property Name
+.\Script.ps1 #>
 
 ##########################################################
 <#
