@@ -121,6 +121,9 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     if (-not ($null -eq ($everything = (Get-Process -name everything)))) {
         & ($everything[0].Path) -uninstall-desktop-shortcut -install-folder-context-menu
     }
+    else {
+        Write-Warning "Could not add everything search to context menu, you can do it from its options"
+    }
 
     # https://github.com/microsoft/winget-cli/discussions/1798#discussioncomment-7812764
     # https://github.com/microsoft/vscode/blob/main/build/win32/code.iss#L81
