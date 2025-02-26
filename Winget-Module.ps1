@@ -11,9 +11,14 @@ function Test-WingetExists($id) {
     else { Write-Debug "Not found $id"; return $false }
 }
 
-function Remove-WingetIfExists($id) {
+function Remove-WingetIfExists($id, $message) {
     if (Test-WingetExists($id)) {
-        Write-Host "Winget uninstalling $id"
+        if ($message) {
+            Write-Host "Winget uninstalling $id ($message)"
+        }
+        else {
+            Write-Host "Winget uninstalling $id"
+        }
         if ($DebugPreference -eq 'SilentlyContinue') {
             winget uninstall --id $id --silent
         }
