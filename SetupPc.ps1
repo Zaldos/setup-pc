@@ -46,6 +46,7 @@ Set-Location "$PSScriptRoot"
 
 . .\Winget-Module.ps1
 . .\Registry-Module.ps1
+. .\Reload-PathModule.ps1
 
 try {
     if (!([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {

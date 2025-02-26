@@ -79,7 +79,7 @@ if ($installAdblock) {
 }
 
 if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
-    Write-Host "As set to HOME or WORK, some apps will be installed for Dev work"
+    Write-Host "`nAs set to HOME or WORK, some apps will be installed for Dev work"
 
     Write-Host "`nInstalling modern powershell"
     # https://github.com/PowerShell/PowerShell/issues/25068
@@ -129,15 +129,15 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     Write-Host "`nInstalling VS Code"
     winget install --id "Microsoft.VisualStudioCode" --override '/VERYSILENT /SP- /MERGETASKS="!runcode,!desktopicon,quicklaunchicon,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"' --exact --source winget --accept-package-agreements --accept-source-agreements
 
-    Write-Host "`nInstalling python"
+    Write-Host "`nInstalling python as local to current user"
     winget install --id "Python.Python.3.13" --scope user
 
     # Reload path and call pip to add pre-commit
     if ($configuration -eq "WORK") {
         try {
-            $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
+            Reload-Path
             Write-Host "`nInstalling pre-commit"
-            pip install pre-commit --user
+            pip install pre-commit
             if ($LASTEXITCODE -eq 0) {
                 Write-Host "pip added pre-commit, maybe check <https://pre-commit.com/#automatically-enabling-pre-commit-on-repositories>" -ForegroundColor Green
             }
