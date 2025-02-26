@@ -107,9 +107,11 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     }
 
     foreach ($id in $machineWideApps) {
-        Write-Host "`nInstalling $id machine wide"
-        winget install --id "$id" --exact --source winget --scope machine `
-            --accept-package-agreements --accept-source-agreements 
+        if (-not (Test-WingetExists $id)) {
+            Write-Host "`nInstalling $id machine wide"
+            winget install --id "$id" --exact --source winget --scope machine `
+                --accept-package-agreements --accept-source-agreements --silent
+        }
     }
 
     # This app doesnt like machine wide installation
@@ -155,7 +157,7 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         # Configures git to use VS code as default editor
         Write-Host "`nConfiguring Git's editor as VS Code"
         &"C:\Program Files\Git\cmd\git.exe" config --global core.editor "code --wait"
-        Write-Host "`nConfigured Git's editor as VS Code"
+        Write-Host "Configured Git's editor as VS Code"
     }
     catch {
         Write-Warning "Failed to configure Git's editor as VS Code"
