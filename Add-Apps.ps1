@@ -96,7 +96,12 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         "UderzoSoftware.SpaceSniffer" # Great disk space visualisation tool
         "Python.Python.3.13"
         "OpenJS.NodeJS"
+        "Obsidian.Obsidian"
     )
+
+    if ($configuration -eq "WORK") {
+        "Microsoft.Sysinternals.RDCMan" # Remote desktop connection manager
+    }
 
     foreach ($id in $machineWideApps) {
         Write-Host "Installing $id machine wide"
