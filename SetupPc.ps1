@@ -1,12 +1,4 @@
-# Allow scripts to run, run it on both pwsh and powershell
-# Scoped
-<# For user
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-.\Script.ps1 #>
-
-##########################################################
-<# https://patorjk.com/software/taag/#p=display&f=Big%20Money-nw&t=CONFIG
- $$$$$$\   $$$$$$\  $$\   $$\ $$$$$$$$\ $$$$$$\  $$$$$$\  
+<#$$$$$\   $$$$$$\  $$\   $$\ $$$$$$$$\ $$$$$$\  $$$$$$\  
 $$  __$$\ $$  __$$\ $$$\  $$ |$$  _____|\_$$  _|$$  __$$\ 
 $$ /  \__|$$ /  $$ |$$$$\ $$ |$$ |        $$ |  $$ /  \__|
 $$ |      $$ |  $$ |$$ $$\$$ |$$$$$\      $$ |  $$ |$$$$\ 
@@ -25,17 +17,15 @@ Once changed run .\SetupPc.ps1 from the terminal
 # $configuration = "PARENT"
 $configuration = "WORK" # Main difference is installation of a few specific apps
 
-$DebugPreference = "SilentlyContinue" # Debug messages off
-# $DebugPreference = "Continue" # Debug messages on
+# $DebugPreference = "Continue" # Uncomment to turn on debug messages
 
 Write-Host "Using $configuration configuration"
 
-$disableTelemetry = $true # (pwsh and dotnet in all configs, home/parent windows telemetry too)
+$oldRightClickMenu = $true
 
+$disableTelemetry = $true # (pwsh and dotnet in all configs, home/parent windows telemetry too)
 $hideNewsAndInterests = $true # Removes annoying taskbar news widget. Only registry toggles not app removals
 $removeNewsAndInterests = $true # Removes the app too in Remove-AppxJunk.ps1
-
-$oldRightClickMenu = $true
 
 $installApps = $true
 $installAdblock = $true # Will force UblockOrigin onto your browser :)
@@ -85,7 +75,7 @@ try {
     . .\Remove-Telemetry.ps1
 
     if ($installApps) {
-        . .\Add-Apps.ps1 #should go last? Move out registry toggles}
+        . .\Add-Apps.ps1
     }
 
     Restart-Processes
@@ -104,7 +94,7 @@ $$ |  $$ |$$ |  $$ |$$ \$$$$ |$$  __|
 $$ |  $$ |$$ |  $$ |$$ |\$$$ |$$ |      
 $$$$$$$  | $$$$$$  |$$ | \$$ |$$$$$$$$\ 
 \_______/  \______/ \__|  \__|\________|
-'@
+'@ -ForegroundColor Green
     if ($openDownloads) {
         Write-Host "- Some installers downloaded to <$($env:USERPROFILE)\Downloads>"
     }
@@ -115,3 +105,4 @@ catch {
 finally {
     Read-Host -Prompt "Any key to exit"
 }
+# Big Text Creator creds: https://patorjk.com/software/taag/#p=display&f=Big%20Money-nw&t=CONFIG
