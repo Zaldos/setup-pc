@@ -21,9 +21,9 @@ Once changed run .\SetupPc.ps1 from the terminal
 
 # This configures which apps are added removed and some other tweaks.
 # Check each file for references to these to see what they effect in detail.
+$configuration = "HOME"
 # $configuration = "PARENT"
 # $configuration = "WORK" # Main difference is installation of a few specific apps
-$configuration = "HOME"
 
 $DebugPreference = "SilentlyContinue" # Debug messages off
 # $DebugPreference = "Continue" # Debug messages on
