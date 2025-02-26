@@ -101,6 +101,7 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
 
     if ($configuration -eq "WORK") {
         "Microsoft.Sysinternals.RDCMan" # Remote desktop connection manager
+        "Microsoft.Teams"
     }
 
     foreach ($id in $machineWideApps) {
