@@ -5,7 +5,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 .\Script.ps1 #>
 
 ##########################################################
-<#
+<# https://patorjk.com/software/taag/#p=display&f=Big%20Money-nw&t=CONFIG
  $$$$$$\   $$$$$$\  $$\   $$\ $$$$$$$$\ $$$$$$\  $$$$$$\  
 $$  __$$\ $$  __$$\ $$$\  $$ |$$  _____|\_$$  _|$$  __$$\ 
 $$ /  \__|$$ /  $$ |$$$$\ $$ |$$ |        $$ |  $$ /  \__|
@@ -63,12 +63,12 @@ catch {
 
 function Restart-Processes {
     Write-Host "Restarting explorer..."
-    taskkill /f /im "explorer.exe" | Write-Debug
-    Start-Process "explorer.exe" | Write-Debug
+    Stop-Process -Name "explorer.exe" -Force -ErrorAction SilentlyContinue
+    Start-Process "explorer.exe"
     Write-Host "Explorer restarted"
 
-    taskkill /f /im "msedge.exe" | Write-Debug
-    taskkill /f /im "MicrosoftEdgeUpdate.exe" | Write-Debug
+    Stop-Process -Name "msedge" -Force -ErrorAction SilentlyContinue
+    Stop-Process -Name "MicrosoftEdgeUpdate" -Force -ErrorAction SilentlyContinue
 }
 
 ###########
@@ -91,8 +91,22 @@ try {
     Restart-Processes
     
     Start-Sleep -Seconds 2
-    if($true -eq $openDownloads){
+    if ($true -eq $openDownloads) {
         explorer.exe "$($env:USERPROFILE)\Downloads"
+    }
+
+    Write-Host @'
+$$$$$$$\   $$$$$$\  $$\   $$\ $$$$$$$$\ 
+$$  __$$\ $$  __$$\ $$$\  $$ |$$  _____|
+$$ |  $$ |$$ /  $$ |$$$$\ $$ |$$ |      
+$$ |  $$ |$$ |  $$ |$$ $$\$$ |$$$$$\    
+$$ |  $$ |$$ |  $$ |$$ \$$$$ |$$  __|   
+$$ |  $$ |$$ |  $$ |$$ |\$$$ |$$ |      
+$$$$$$$  | $$$$$$  |$$ | \$$ |$$$$$$$$\ 
+\_______/  \______/ \__|  \__|\________|
+'@
+    if ($openDownloads) {
+        Write-Host "- Some installers downloaded to <$($env:USERPROFILE)\Downloads>"
     }
 }
 catch {

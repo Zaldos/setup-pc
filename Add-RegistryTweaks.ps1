@@ -33,7 +33,9 @@ Write-Host "Removing sponsored link shortcuts in Edge for everyone"
 New-ItemOrGet -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" | Set-ItemProperty -Name "NewTabPageHideDefaultTopSites" -Value 1
 
 # Hides the spotlight shortcut on desktop
-Remove-Item "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" 
+if ($null -eq (Test-Path -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{2cc5ca98-6485-489a-920e-b3e88a6ccce3}")) {
+    Remove-Item "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{2cc5ca98-6485-489a-920e-b3e88a6ccce3}"
+}
 New-ItemOrGet -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" | Set-ItemProperty -Name "{2cc5ca98-6485-489a-920e-b3e88a6ccce3}" -Value 1
 
 Write-Host "Removing Edge's 'trending' searches"
