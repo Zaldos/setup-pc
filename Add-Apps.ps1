@@ -95,7 +95,6 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         "Derailed.k9s" # K8s Terminal Gui
         "emoacht.Monitorian" # Brightness control
         "UderzoSoftware.SpaceSniffer" # Great disk space visualisation tool
-        "Python.Python.3.13"
         "OpenJS.NodeJS"
         "Obsidian.Obsidian"
     )
@@ -130,12 +129,15 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
     Write-Host "`nInstalling VS Code"
     winget install --id "Microsoft.VisualStudioCode" --override '/VERYSILENT /SP- /MERGETASKS="!runcode,!desktopicon,quicklaunchicon,addcontextmenufiles,addcontextmenufolders,associatewithfiles,addtopath"' --exact --source winget --accept-package-agreements --accept-source-agreements
 
+    Write-Host "`nInstalling python"
+    winget install --id "Python.Python.3.13" --scope user
+
     # Reload path and call pip to add pre-commit
     if ($configuration -eq "WORK") {
         try {
             $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User") 
             Write-Host "`nInstalling pre-commit"
-            pip install pre-commit
+            pip install pre-commit --user
             if ($LASTEXITCODE -eq 0) {
                 Write-Host "pip added pre-commit, maybe check <https://pre-commit.com/#automatically-enabling-pre-commit-on-repositories>" -ForegroundColor Green
             }
