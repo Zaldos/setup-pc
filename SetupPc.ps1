@@ -53,8 +53,8 @@ catch {
 
 function Restart-Processes {
     Write-Host "Restarting explorer..."
-    Stop-Process -Name "explorer.exe" -Force -ErrorAction SilentlyContinue
-    Start-Process "explorer.exe"
+    Stop-Process -Name "explorer" -Force -ErrorAction SilentlyContinue
+    Start-Process "explorer"
     Write-Host "Explorer restarted"
 
     Stop-Process -Name "msedge" -Force -ErrorAction SilentlyContinue
