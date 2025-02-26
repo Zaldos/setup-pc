@@ -93,7 +93,6 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         "ahmetb.kubectx" # K8s context switching
         "ahmetb.kubens" # K8s namespace switching
         "Derailed.k9s" # K8s Terminal Gui
-        "File-New-Project.EarTrumpet" # Better volume and audio control
         "emoacht.Monitorian" # Brightness control
         "UderzoSoftware.SpaceSniffer" # Great disk space visualisation tool
         "Python.Python.3.13"
@@ -111,6 +110,9 @@ if ($configuration -eq "HOME" -or $configuration -eq "WORK") {
         winget install --id "$id" --exact --source winget --scope machine `
             --accept-package-agreements --accept-source-agreements 
     }
+
+    # This app doesnt like machine wide installation
+    winget install --id "File-New-Project.EarTrumpet" # Better volume and audio control
 
     # Remove Voidtools.Everything desktop shortcut and add to right click menu
     if (-not ($null -eq ($everything = (Get-Process -name everything)))) {
